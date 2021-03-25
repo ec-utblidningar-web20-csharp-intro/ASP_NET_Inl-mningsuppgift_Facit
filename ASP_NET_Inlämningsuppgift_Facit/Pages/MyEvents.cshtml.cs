@@ -19,12 +19,12 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
             _context = context;
         }
 
-        public IList<Event> Event { get;set; }
+        public IList<Event> Events { get;set; }
 
         public async Task OnGetAsync()
         {
             var attendee = await _context.Attendees.Include(a => a.Events).FirstOrDefaultAsync();
-            Event = attendee.Events;
+            Events = attendee.Events;
         }
     }
 }
