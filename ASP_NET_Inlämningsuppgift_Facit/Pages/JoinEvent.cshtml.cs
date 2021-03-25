@@ -36,5 +36,29 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
             }
             return Page();
         }
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Event = await _context.Events.Include(e => e.Attendees).FirstOrDefaultAsync(m => m.Id == id);
+
+            if (Event == null)
+            {
+                return NotFound();
+            }
+
+            var attendee = await _context.Attendees.FirstOrDefaultAsync();
+
+            if (!Event.Attendees.Contains(attendee))
+            {
+                Event.Attendees.Add(attendee);
+                await _context.SaveChangesAsync();
+            }
+
+            return Page();
+        }
     }
 }
