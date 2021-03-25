@@ -1,38 +1,38 @@
 ﻿@page
-@model ASP_NET_Inlämningsuppgift_Facit.Pages.EventsModel
+@model ASP_NET_Inlämningsuppgift_Facit.Pages.MyEventsModel
 
 @{
-    ViewData["Title"] = "Events";
+    ViewData["Title"] = "MyEvents";
 }
 
-<h1>Events</h1>
+<h1>MyEvents</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Title)
+                @Html.DisplayNameFor(model => model.Event[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Description)
+                @Html.DisplayNameFor(model => model.Event[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Place)
+                @Html.DisplayNameFor(model => model.Event[0].Place)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Address)
+                @Html.DisplayNameFor(model => model.Event[0].Address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].Date)
+                @Html.DisplayNameFor(model => model.Event[0].Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Events[0].SpotsAvailable)
+                @Html.DisplayNameFor(model => model.Event[0].SpotsAvailable)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Events) {
+@foreach (var item in Model.Event) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -51,12 +51,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SpotsAvailable)
-            </td>
-            <td>
-                <form method="get" asp-page="/JoinEvent">
-                    <input type="hidden" name="id" value="@item.Id" />
-                    <button type="submit" class="btn btn-outline-primary">Join</button>
-                </form>
             </td>
         </tr>
 }
