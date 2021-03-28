@@ -13,7 +13,11 @@ namespace ASP_NET_Inlämningsuppgift_Facit
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+            
+            // Seeda databas här vid behov
+                
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

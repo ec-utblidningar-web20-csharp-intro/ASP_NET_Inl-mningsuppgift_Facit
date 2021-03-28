@@ -32,11 +32,10 @@ namespace ASP_NET_Inlämningsuppgift_Facit
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, EventDbContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                context.Seed();
                 app.UseDeveloperExceptionPage();
             }
             else

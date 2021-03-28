@@ -18,7 +18,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
         public DbSet<Organizer> Organizers { get; set; }
         public DbSet<Attendee> Attendees { get; set; }
 
-        public void Seed()
+        public void ResetAndSeed()
         {
             Database.EnsureDeleted();
             Database.EnsureCreated();
