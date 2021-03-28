@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Data;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Pages
 {

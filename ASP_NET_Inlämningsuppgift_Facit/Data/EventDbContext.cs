@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Data
 {
@@ -19,10 +20,16 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
         public DbSet<Organizer> Organizers { get; set; }
         public DbSet<Attendee> Attendees { get; set; }
 
-        public void ResetAndSeed()
+        public async Task ResetAndSeedAsync(UserManager<IdentityUser> userManager)
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+            await Database.EnsureDeletedAsync();
+            await Database.EnsureCreatedAsync();
+
+            IdentityUser user = new IdentityUser()
+            {
+                UserName = "test_user",
+            };
+            await userManager.CreateAsync(user, "Passw0rd!");
 
             Attendee[] attendees = new Attendee[] { 
                 new Attendee()
@@ -62,11 +69,11 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
                 },
             };
 
-            AddRange(attendees);
-            AddRange(organizers);
-            AddRange(events);
+            await AddRangeAsync(attendees);
+            await AddRangeAsync(organizers);
+            await AddRangeAsync(events);
 
-            SaveChanges();
+            await SaveChangesAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ASP_NET_Inlämningsuppgift_Facit.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -13,20 +14,23 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly EventDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public IndexModel(
             ILogger<IndexModel> logger,
-            EventDbContext context)
+            EventDbContext context,
+            UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
-        public void OnGet(bool? resetDb)
+        public async Task OnGetAsync(bool? resetDb)
         {
             if(resetDb ?? false)
             {
-                _context.ResetAndSeed();
+                await _context.ResetAndSeedAsync(_userManager);
             }
         }
     }
