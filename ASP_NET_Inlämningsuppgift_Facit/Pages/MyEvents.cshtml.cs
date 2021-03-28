@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Pages
 {
+    [Authorize]
     public class MyEventsModel : PageModel
     {
         private readonly ASP_NET_Inlämningsuppgift_Facit.Data.EventDbContext _context;

@@ -2,36 +2,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ASP_NET_Inlämningsuppgift_Facit.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Pages.User
 {
-    public class RegisterModel : PageModel
+    public class LoginModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public RegisterModel(UserManager<IdentityUser> userManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager)
         {
-            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [BindProperty]
-        public NewUserForm NewUser { get; set; }
-        public class NewUserForm
+        public LoginUserForm LoginUser { get; set; }
+        public class LoginUserForm
         {
             public string UserName { get; set; }
             public string Password { get; set; }
         }
         public async Task<IActionResult> OnPost()
         {
-            IdentityUser newUser = new IdentityUser() { 
-                UserName = NewUser.UserName,
-            };
-            
-            var result = await _userManager.CreateAsync(newUser, NewUser.Password);
+            var result = await _signInManager.PasswordSignInAsync(LoginUser.UserName, LoginUser.Password, false, false);
 
             if (result.Succeeded)
             {
