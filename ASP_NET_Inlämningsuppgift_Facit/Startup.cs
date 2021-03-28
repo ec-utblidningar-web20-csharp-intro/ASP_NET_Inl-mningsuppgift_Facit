@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASP_NET_Inlämningsuppgift_Facit
 {
@@ -29,6 +30,9 @@ namespace ASP_NET_Inlämningsuppgift_Facit
 
             services.AddDbContext<EventDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EventDbContext")));
+
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<EventDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +54,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

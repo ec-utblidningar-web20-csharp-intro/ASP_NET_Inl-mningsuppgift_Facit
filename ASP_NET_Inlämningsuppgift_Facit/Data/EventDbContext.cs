@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Data
 {
-    public class EventDbContext : DbContext
+    public class EventDbContext : IdentityDbContext
     {
         public EventDbContext (DbContextOptions<EventDbContext> options)
             : base(options)
