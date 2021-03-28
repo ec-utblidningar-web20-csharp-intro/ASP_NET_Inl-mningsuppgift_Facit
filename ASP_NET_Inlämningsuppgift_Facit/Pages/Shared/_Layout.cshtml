@@ -39,8 +39,11 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - ASP_NET_Inlämningsuppgift_Facit - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        <div class="d-flex justify-content-around">
+            <span>
+                &copy; 2021 - ASP_NET_Inlämningsuppgift_Facit - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            </span>
+            <a type="button" class="btn-danger text-light" asp-route-resetDb="true">Reset Db</a>
         </div>
     </footer>
 
