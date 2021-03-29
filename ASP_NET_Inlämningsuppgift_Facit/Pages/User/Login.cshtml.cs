@@ -11,10 +11,13 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.User
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager)
+        public LoginModel(SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
+                _userManager = userManager;
         }
 
         [BindProperty]
@@ -27,6 +30,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.User
         public async Task<IActionResult> OnPost()
         {
             var result = await _signInManager.PasswordSignInAsync(LoginUser.UserName, LoginUser.Password, false, false);
+            //var result = await _signInManager.SignInAsync(LoginUser.UserName);
 
             if (result.Succeeded)
             {

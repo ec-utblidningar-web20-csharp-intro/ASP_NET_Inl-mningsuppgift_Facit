@@ -28,6 +28,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
             IdentityUser user = new IdentityUser()
             {
                 UserName = "test_user",
+                Email = "test@hotmail.com",
             };
             await userManager.CreateAsync(user, "Passw0rd!");
 
