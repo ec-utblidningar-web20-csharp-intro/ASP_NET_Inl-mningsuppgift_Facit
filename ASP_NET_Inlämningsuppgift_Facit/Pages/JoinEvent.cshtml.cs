@@ -56,7 +56,11 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
                 return NotFound();
             }
 
-            var user = await _context.Users.Include(u => u.MyEvents).FirstOrDefaultAsync();
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Users
+                .Where(u => u.Id == userId)
+                .Include(u => u.MyEvents)
+                .FirstOrDefaultAsync();
 
             if (!user.MyEvents.Contains(Event))
             {

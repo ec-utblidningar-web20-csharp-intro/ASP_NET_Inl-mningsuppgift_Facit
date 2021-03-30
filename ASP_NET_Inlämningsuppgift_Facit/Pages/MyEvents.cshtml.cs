@@ -31,7 +31,11 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
 
         public async Task OnGetAsync()
         {
-            var user = await _context.Users.Include(u => u.MyEvents).FirstOrDefaultAsync();
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Users
+                .Where(u => u.Id == userId)
+                .Include(u => u.MyEvents)
+                .FirstOrDefaultAsync();
 
             Events = user.MyEvents;
         }
