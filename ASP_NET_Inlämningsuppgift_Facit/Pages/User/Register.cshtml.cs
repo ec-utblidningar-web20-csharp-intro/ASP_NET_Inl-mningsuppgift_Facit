@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ASP_NET_Inlämningsuppgift_Facit.Data;
+using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,9 +12,9 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.User
 {
     public class RegisterModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<MyUser> _userManager;
 
-        public RegisterModel(UserManager<IdentityUser> userManager)
+        public RegisterModel(UserManager<MyUser> userManager)
         {
             _userManager = userManager;
         }
@@ -27,7 +28,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.User
         }
         public async Task<IActionResult> OnPost()
         {
-            IdentityUser newUser = new IdentityUser() { 
+            MyUser newUser = new MyUser() { 
                 UserName = NewUser.UserName,
             };
             

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,14 +11,14 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.User
 {
     public class LoginModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<MyUser> _signInManager;
+        private readonly UserManager<MyUser> _userManager;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager)
+        public LoginModel(SignInManager<MyUser> signInManager,
+            UserManager<MyUser> userManager)
         {
             _signInManager = signInManager;
-                _userManager = userManager;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -30,7 +31,6 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.User
         public async Task<IActionResult> OnPost()
         {
             var result = await _signInManager.PasswordSignInAsync(LoginUser.UserName, LoginUser.Password, false, false);
-            //var result = await _signInManager.SignInAsync(LoginUser.UserName);
 
             if (result.Succeeded)
             {

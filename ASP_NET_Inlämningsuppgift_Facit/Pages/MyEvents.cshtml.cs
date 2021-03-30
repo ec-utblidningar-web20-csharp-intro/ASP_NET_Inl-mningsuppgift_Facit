@@ -8,25 +8,32 @@ using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Data;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Pages
 {
     [Authorize]
     public class MyEventsModel : PageModel
     {
-        private readonly ASP_NET_Inlämningsuppgift_Facit.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
+        private readonly UserManager<MyUser> _userManager;
 
-        public MyEventsModel(ASP_NET_Inlämningsuppgift_Facit.Data.EventDbContext context)
+        public MyEventsModel(
+            EventDbContext context,
+            UserManager<MyUser> userManager
+            )
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Event> Events { get;set; }
 
         public async Task OnGetAsync()
         {
-            var attendee = await _context.Attendees.Include(a => a.Events).FirstOrDefaultAsync();
-            Events = attendee.Events;
+            var user = await _context.Users.Include(u => u.MyEvents).FirstOrDefaultAsync();
+
+            Events = user.MyEvents;
         }
     }
 }

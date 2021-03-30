@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Data;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Pages
 {
     public class JoinEventModel : PageModel
     {
-        private readonly ASP_NET_Inlämningsuppgift_Facit.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
+        private readonly UserManager<MyUser> _userManager;
 
-        public JoinEventModel(ASP_NET_Inlämningsuppgift_Facit.Data.EventDbContext context)
+        public JoinEventModel(
+            EventDbContext context,
+            UserManager<MyUser> userManager
+            )
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public Event Event { get; set; }
@@ -43,18 +49,18 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
                 return NotFound();
             }
 
-            Event = await _context.Events.Include(e => e.Attendees).FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {
                 return NotFound();
             }
 
-            var attendee = await _context.Attendees.FirstOrDefaultAsync();
+            var user = await _context.Users.Include(u => u.MyEvents).FirstOrDefaultAsync();
 
-            if (!Event.Attendees.Contains(attendee))
+            if (!user.MyEvents.Contains(Event))
             {
-                Event.Attendees.Add(attendee);
+                user.MyEvents.Add(Event);
                 await _context.SaveChangesAsync();
             }
 

@@ -1,4 +1,5 @@
 ﻿using ASP_NET_Inlämningsuppgift_Facit.Data;
+using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,12 +15,12 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly EventDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<MyUser> _userManager;
 
         public IndexModel(
             ILogger<IndexModel> logger,
             EventDbContext context,
-            UserManager<IdentityUser> userManager)
+            UserManager<MyUser> userManager)
         {
             _logger = logger;
             _context = context;

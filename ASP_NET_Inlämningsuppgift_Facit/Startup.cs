@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Data;
 using Microsoft.AspNetCore.Identity;
+using ASP_NET_Inlämningsuppgift_Facit.Models;
 
 namespace ASP_NET_Inlämningsuppgift_Facit
 {
@@ -31,7 +32,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit
             services.AddDbContext<EventDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EventDbContext")));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<MyUser>()
                 .AddEntityFrameworkStores<EventDbContext>();
         }
 

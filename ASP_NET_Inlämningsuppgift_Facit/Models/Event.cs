@@ -14,7 +14,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Models
         public string Address { get; set; }
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
-        public List<Attendee> Attendees { get; set; }
-        public Organizer Organizer { get; set; }
+        public List<MyUser> Attendees { get; set; }
+        //public Organizer Organizer { get; set; }
     }
 }
