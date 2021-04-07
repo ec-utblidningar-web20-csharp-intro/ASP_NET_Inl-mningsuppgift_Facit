@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Data;
 using Microsoft.AspNetCore.Identity;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ASP_NET_Inlämningsuppgift_Facit
 {
@@ -34,6 +35,19 @@ namespace ASP_NET_Inlämningsuppgift_Facit
 
             services.AddDefaultIdentity<MyUser>()
                 .AddEntityFrameworkStores<EventDbContext>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Login";
+                options.LoginPath = "/Login";
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+
+                options.Cookie.HttpOnly = true;
+
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(2);
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
