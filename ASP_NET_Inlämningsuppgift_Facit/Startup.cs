@@ -33,8 +33,23 @@ namespace ASP_NET_Inlämningsuppgift_Facit
             services.AddDbContext<EventDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EventDbContext")));
 
-            services.AddDefaultIdentity<MyUser>()
-                .AddEntityFrameworkStores<EventDbContext>();
+            services.AddDefaultIdentity<MyUser>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredUniqueChars = 0;
+
+                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvxyz";
+                    options.User.RequireUniqueEmail = true;
+
+                    options.SignIn.RequireConfirmedEmail = true;
+
+                    options.Lockout.MaxFailedAccessAttempts = 3;
+                })
+                .AddEntityFrameworkStores<EventDbContext>(); 
 
             services.ConfigureApplicationCookie(options =>
             {
