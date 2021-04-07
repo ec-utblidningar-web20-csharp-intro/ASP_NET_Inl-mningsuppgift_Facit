@@ -34,10 +34,10 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
             var userId = _userManager.GetUserId(User);
             var user = await _context.Users
                 .Where(u => u.Id == userId)
-                .Include(u => u.MyEvents)
+                .Include(u => u.AttendingEvents)
                 .FirstOrDefaultAsync();
 
-            Events = user.MyEvents;
+            Events = user.AttendingEvents;
         }
     }
 }

@@ -59,12 +59,12 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
             var userId = _userManager.GetUserId(User);
             var user = await _context.Users
                 .Where(u => u.Id == userId)
-                .Include(u => u.MyEvents)
+                .Include(u => u.AttendingEvents)
                 .FirstOrDefaultAsync();
 
-            if (!user.MyEvents.Contains(Event))
+            if (!user.AttendingEvents.Contains(Event))
             {
-                user.MyEvents.Add(Event);
+                user.AttendingEvents.Add(Event);
                 await _context.SaveChangesAsync();
             }
 

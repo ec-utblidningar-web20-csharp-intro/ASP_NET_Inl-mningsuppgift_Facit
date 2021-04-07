@@ -3,6 +3,7 @@ using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,18 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
             _userManager = userManager;
         }
 
+        public string Role { get; set; }
         public async Task OnGetAsync(bool? resetDb)
         {
             if(resetDb ?? false)
             {
                 await _context.ResetAndSeedAsync(_userManager);
             }
+
+            Role = await _context.Users
+                .Where(u => u.Id == _userManager.GetUserId(User))
+                .Select(u => u.Role)
+                .FirstOrDefaultAsync();
         }
     }
 }

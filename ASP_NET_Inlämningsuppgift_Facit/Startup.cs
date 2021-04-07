@@ -42,10 +42,10 @@ namespace ASP_NET_Inlämningsuppgift_Facit
                     options.Password.RequiredLength = 6;
                     options.Password.RequiredUniqueChars = 0;
 
-                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvxyz";
+                    //options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvxyz";
                     options.User.RequireUniqueEmail = true;
 
-                    options.SignIn.RequireConfirmedEmail = true;
+                    options.SignIn.RequireConfirmedEmail = false;
 
                     options.Lockout.MaxFailedAccessAttempts = 3;
                 })

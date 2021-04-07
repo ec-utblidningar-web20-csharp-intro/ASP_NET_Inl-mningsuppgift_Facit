@@ -25,20 +25,21 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
 
             MyUser user = new MyUser()
             {
+                Role = "",
                 UserName = "test_user",
                 Email = "test@hotmail.com",
             };
             await userManager.CreateAsync(user, "Passw0rd!");
 
-            /*
-            Organizer[] organizers = new Organizer[] {
-                new Organizer(){
-                    Name = "Funcorp",
+            MyUser[] organizers = new MyUser[] {
+                new MyUser(){
+                    Role = "Organizer",
+                    UserName = "Funcorp",
                     Email = "info@funcorp.com",
                     PhoneNumber = "+1 203 43 234",
                 },
             };
-            */
+            await userManager.CreateAsync(organizers[0], "Passw0rd!");
 
             Event[] events = new Event[] { 
                 new Event(){ 
@@ -48,7 +49,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
                     Address="515 S Cascade Ave Colorado Springs, CO 80903", 
                     Date=DateTime.Now.AddDays(34), 
                     SpotsAvailable=234,
-                    //Organizer= organizers[0],
+                    Organizer= organizers[0],
                 },
                 new Event(){
                     Title="Moonhaven",
@@ -57,7 +58,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
                     Address="510 N McPherson Church Rd Fayetteville, NC 28303",
                     Date=DateTime.Now.AddDays(12),
                     SpotsAvailable=23,
-                    //Organizer= organizers[0],
+                    Organizer= organizers[0],
                 },
             };
 
