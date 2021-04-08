@@ -25,7 +25,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
 
             MyUser user = new MyUser()
             {
-                Role = "",
+                Role = UserRole.User,
                 UserName = "test_user",
                 Email = "test@hotmail.com",
             };
@@ -33,7 +33,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
 
             MyUser[] organizers = new MyUser[] {
                 new MyUser(){
-                    Role = "Organizer",
+                    Role = UserRole.Organizer,
                     UserName = "Funcorp",
                     Email = "info@funcorp.com",
                     PhoneNumber = "+1 203 43 234",

@@ -30,7 +30,8 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.User
         }
         public async Task<IActionResult> OnPost()
         {
-            var result = await _signInManager.PasswordSignInAsync(LoginUser.UserName, LoginUser.Password, false, false);
+            var result = await _signInManager
+                .PasswordSignInAsync(LoginUser.UserName, LoginUser.Password, isPersistent:true, lockoutOnFailure:false);
 
             if (result.Succeeded)
             {

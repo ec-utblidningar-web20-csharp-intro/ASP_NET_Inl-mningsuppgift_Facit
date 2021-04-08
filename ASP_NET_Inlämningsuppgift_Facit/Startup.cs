@@ -28,7 +28,17 @@ namespace ASP_NET_Inlämningsuppgift_Facit
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages(o =>
+            {
+                o.Conventions.AuthorizeFolder("/");
+                o.Conventions.AllowAnonymousToFolder("/User");
+                // Jag sätter en [AllowAnonymous] direkt i Index sidan för att demonstrera
+                //o.Conventions.AllowAnonymousToPage("/Index");
+
+                // Man måste skapa "RequireAdministratorRole" policyn för att detta ska fungera
+                // https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-5.0#policy-based-role-checks
+                // o.Conventions.AuthorizeFolder("/Admin", "RequireAdministratorRole");
+            });
 
             services.AddDbContext<EventDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("EventDbContext")));
@@ -49,12 +59,12 @@ namespace ASP_NET_Inlämningsuppgift_Facit
 
                     options.Lockout.MaxFailedAccessAttempts = 3;
                 })
-                .AddEntityFrameworkStores<EventDbContext>(); 
+                .AddEntityFrameworkStores<EventDbContext>();
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.AccessDeniedPath = "/Login";
-                options.LoginPath = "/Login";
+                //options.AccessDeniedPath = "/Login";
+                options.LoginPath = "/User/Login";
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
 
                 options.Cookie.HttpOnly = true;
