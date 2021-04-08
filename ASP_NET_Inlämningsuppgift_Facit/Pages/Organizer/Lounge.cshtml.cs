@@ -41,15 +41,20 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.Organizer
              * som joinar User, UserRole och Role tabellerna.
              */
             var users = await _userManager.Users.ToListAsync();
-            for(int i = 0; i < users.Count; i++)
-            {
-                if(!(await _userManager.IsInRoleAsync(users[i], "Organizer")))
-                {
-                    users.RemoveAt(i);
-                }
-            }
 
             Organizers = users;
+        }
+
+        [BindProperty]
+        public bool CheckBox { get; set; }
+        public async Task OnPost()
+        {
+            if (!CheckBox)
+                await _userManager.RemoveFromRoleAsync(await _userManager.GetUserAsync(User), "Organizer");
+            else
+                await _userManager.AddToRoleAsync(await _userManager.GetUserAsync(User), "Organizer");
+
+            await OnGet();
         }
     }
 }
