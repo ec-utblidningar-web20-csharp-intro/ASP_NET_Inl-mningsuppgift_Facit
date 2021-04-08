@@ -64,7 +64,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit
 
             services.ConfigureApplicationCookie(options =>
             {
-                //options.AccessDeniedPath = "/Login";
+                options.AccessDeniedPath = "/NotAllowed";
                 options.LoginPath = "/User/Login";
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
 

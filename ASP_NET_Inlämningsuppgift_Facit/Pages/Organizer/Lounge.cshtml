@@ -1,0 +1,11 @@
+﻿@page
+@model ASP_NET_Inlämningsuppgift_Facit.Pages.Organizer.LoungeModel
+@{
+}
+
+<h1>Välkommen till organisatörernas V.I.P sida</h1>
+
+@foreach(var org in Model.Organizers)
+{
+    <p>@org.UserName - @org.Email</p>
+}

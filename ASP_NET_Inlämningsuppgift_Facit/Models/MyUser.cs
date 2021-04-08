@@ -13,5 +13,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Models
         public List<Event> AttendingEvents { get; set; }
         [InverseProperty("Organizer")]
         public List<Event> OrganizedEvents { get; set; }
+
+        public List<IdentityRole> Roles { get; set; }
     }
 }

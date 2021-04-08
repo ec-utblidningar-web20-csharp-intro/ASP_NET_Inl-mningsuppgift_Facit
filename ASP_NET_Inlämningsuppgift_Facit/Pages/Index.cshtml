@@ -5,11 +5,15 @@
 }
 
 <div class="text-center">
-    @if (false)//Model.Role == UserRole.Organizer)
+    @if (User.IsInRole("Organizer"))
     {
-        <h1 class="display-4">Welcome! Dear Organizer!!</h1>
+    <h1 class="display-4">
+        Welcome! Dear
+        <a asp-page="/Organizer/Lounge">Organizer</a>
+        !!
+    </h1>
     }
-    else if (false)//Model.Role == UserRole.Admin)
+    else if (User.IsInRole("Admin"))
     {
         <h1 class="display-4">Welcome! Yo Admin!!</h1>
     }

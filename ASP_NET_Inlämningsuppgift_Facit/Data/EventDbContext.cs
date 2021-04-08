@@ -29,7 +29,13 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
             await roleManager.CreateAsync(new IdentityRole("Admin"));
             await roleManager.CreateAsync(new IdentityRole("Organizer"));
 
-            var roles = await this.Roles.ToListAsync();
+            MyUser admin = new MyUser()
+            {
+                UserName = "admin",
+                Email = "admin@hotmail.com",
+            };
+            await userManager.CreateAsync(admin, "Passw0rd!");
+            await userManager.AddToRoleAsync(admin, "Admin");
 
             MyUser user = new MyUser()
             {
@@ -37,7 +43,6 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
                 Email = "test@hotmail.com",
             };
             await userManager.CreateAsync(user, "Passw0rd!");
-            await userManager.AddToRoleAsync(user, "Admin");
 
             MyUser[] organizers = new MyUser[] {
                 new MyUser(){
@@ -45,9 +50,22 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
                     Email = "info@funcorp.com",
                     PhoneNumber = "+1 203 43 234",
                 },
+                new MyUser(){
+                    UserName = "Funcorp1",
+                    Email = "info1@funcorp.com",
+                    PhoneNumber = "+1 203 43 234",
+                },
+                new MyUser(){
+                    UserName = "Funcorp2",
+                    Email = "info2@funcorp.com",
+                    PhoneNumber = "+1 203 43 234",
+                },
             };
-            await userManager.CreateAsync(organizers[0], "Passw0rd!");
-            await userManager.AddToRoleAsync(organizers[0], "Organizer");
+            foreach(var org in organizers)
+            {
+                await userManager.CreateAsync(org, "Passw0rd!");
+                await userManager.AddToRoleAsync(org, "Organizer");
+            }
 
             Event[] events = new Event[] { 
                 new Event(){ 

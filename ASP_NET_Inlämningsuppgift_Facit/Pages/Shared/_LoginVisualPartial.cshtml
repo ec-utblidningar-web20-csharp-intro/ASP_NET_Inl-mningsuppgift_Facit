@@ -5,6 +5,6 @@
     {
         IdentityUser user = await UserManager.GetUserAsync(User);
 
-        <h3>@User.Identity.Name find at @user.Email</h3>
+        <h3>@User.Identity.Name find at @user?.Email</h3>
     }
 }
