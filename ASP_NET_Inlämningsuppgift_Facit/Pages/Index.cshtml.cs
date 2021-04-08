@@ -19,29 +19,26 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
         private readonly ILogger<IndexModel> _logger;
         private readonly EventDbContext _context;
         private readonly UserManager<MyUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public IndexModel(
             ILogger<IndexModel> logger,
             EventDbContext context,
-            UserManager<MyUser> userManager)
+            UserManager<MyUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
-        public UserRole Role { get; set; }
         public async Task OnGetAsync(bool? resetDb)
         {
             if(resetDb ?? false)
             {
-                await _context.ResetAndSeedAsync(_userManager);
+                await _context.ResetAndSeedAsync(_userManager, _roleManager);
             }
-
-            Role = await _context.Users
-                .Where(u => u.Id == _userManager.GetUserId(User))
-                .Select(u => u.Role)
-                .FirstOrDefaultAsync();
         }
     }
 }

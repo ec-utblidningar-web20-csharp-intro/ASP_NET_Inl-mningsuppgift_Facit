@@ -33,7 +33,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit
                 o.Conventions.AuthorizeFolder("/");
                 o.Conventions.AllowAnonymousToFolder("/User");
                 // Jag sätter en [AllowAnonymous] direkt i Index sidan för att demonstrera
-                //o.Conventions.AllowAnonymousToPage("/Index");
+                // o.Conventions.AllowAnonymousToPage("/Index");
 
                 // Man måste skapa "RequireAdministratorRole" policyn för att detta ska fungera
                 // https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-5.0#policy-based-role-checks
@@ -59,6 +59,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit
 
                     options.Lockout.MaxFailedAccessAttempts = 3;
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<EventDbContext>();
 
             services.ConfigureApplicationCookie(options =>

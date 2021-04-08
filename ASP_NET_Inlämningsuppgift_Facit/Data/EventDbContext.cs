@@ -18,28 +18,36 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
 
         public DbSet<Event> Events { get; set; }
 
-        public async Task ResetAndSeedAsync(UserManager<MyUser> userManager)
+        public async Task ResetAndSeedAsync(
+            UserManager<MyUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             await Database.EnsureDeletedAsync();
             await Database.EnsureCreatedAsync();
 
+            await roleManager.CreateAsync(new IdentityRole("Attendee"));
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+            await roleManager.CreateAsync(new IdentityRole("Organizer"));
+
+            var roles = await this.Roles.ToListAsync();
+
             MyUser user = new MyUser()
             {
-                Role = UserRole.User,
                 UserName = "test_user",
                 Email = "test@hotmail.com",
             };
             await userManager.CreateAsync(user, "Passw0rd!");
+            await userManager.AddToRoleAsync(user, "Admin");
 
             MyUser[] organizers = new MyUser[] {
                 new MyUser(){
-                    Role = UserRole.Organizer,
                     UserName = "Funcorp",
                     Email = "info@funcorp.com",
                     PhoneNumber = "+1 203 43 234",
                 },
             };
             await userManager.CreateAsync(organizers[0], "Passw0rd!");
+            await userManager.AddToRoleAsync(organizers[0], "Organizer");
 
             Event[] events = new Event[] { 
                 new Event(){ 
