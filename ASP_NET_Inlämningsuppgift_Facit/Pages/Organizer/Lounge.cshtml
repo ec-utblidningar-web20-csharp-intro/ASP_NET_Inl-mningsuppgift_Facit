@@ -10,18 +10,11 @@
 
 @foreach (var org in Model.Organizers)
 {
-    bool test = await userManager.IsInRoleAsync(org, "Organizer");
+    Model.CheckBox = await userManager.IsInRoleAsync(org, "Organizer");
     string id = "I" + i;
 
     <form method="post" id="@id" asp-route-id="@org.Id">
-        @if (test)
-        {
-            <input checked="" onchange="$(@Html.Raw("\'#" + id + "\'")).submit()" asp-for="CheckBox" />
-        }
-        else
-        {
-            <input onchange="$(@Html.Raw("\'#" + id + "\'")).submit()" asp-for="CheckBox" />
-        }
+        <input onchange="$(@Html.Raw("\'#" + id + "\'")).submit()" asp-for="CheckBox" />
     </form>
 
     <p>@org.UserName - @org.Email</p>
