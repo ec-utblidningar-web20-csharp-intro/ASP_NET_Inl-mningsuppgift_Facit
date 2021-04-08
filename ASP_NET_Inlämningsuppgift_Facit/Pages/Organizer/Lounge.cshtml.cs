@@ -47,12 +47,12 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.Organizer
 
         [BindProperty]
         public bool CheckBox { get; set; }
-        public async Task OnPost()
+        public async Task OnPost(string? id)
         {
             if (!CheckBox)
-                await _userManager.RemoveFromRoleAsync(await _userManager.GetUserAsync(User), "Organizer");
+                await _userManager.RemoveFromRoleAsync(await _userManager.FindByIdAsync(id), "Organizer");
             else
-                await _userManager.AddToRoleAsync(await _userManager.GetUserAsync(User), "Organizer");
+                await _userManager.AddToRoleAsync(await _userManager.FindByIdAsync(id), "Organizer");
 
             await OnGet();
         }
