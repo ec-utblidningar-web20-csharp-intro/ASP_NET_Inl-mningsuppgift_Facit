@@ -26,7 +26,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.Organizer
             _context = context;
         }
 
-        public List<MyUser> Organizers;
+        public List<MyUser> Users;
         public async Task OnGet()
         {
             /* 
@@ -42,7 +42,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages.Organizer
              */
             var users = await _userManager.Users.ToListAsync();
 
-            Organizers = users;
+            Users = users;
         }
 
         [BindProperty]
