@@ -7,14 +7,12 @@
 
 <h1>Välkommen till organisatörernas V.I.P sida</h1>
 
-@for (int i = 0; i < Model.Users.Count; i++)
+@foreach (var user in Model.Users)
 {
-    var user = Model.Users[i];
     Model.CheckBox = await userManager.IsInRoleAsync(user, "Organizer");
-    string id = "I" + i;
 
-    <form method="post" id="@id" asp-route-id="@user.Id">
-        @Html.CheckBoxFor(m => m.CheckBox, new { onchange= "$(\'#@id\').submit()" })
+    <form method="post" asp-route-id="@user.Id">
+        @Html.CheckBoxFor(m => m.CheckBox, new { onchange= "this.form.submit()" })
     </form>
 
     <p>@user.UserName - @user.Email</p>
