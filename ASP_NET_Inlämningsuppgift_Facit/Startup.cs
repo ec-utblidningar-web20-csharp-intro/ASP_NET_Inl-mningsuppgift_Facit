@@ -13,6 +13,7 @@ using ASP_NET_Inlämningsuppgift_Facit.Data;
 using Microsoft.AspNetCore.Identity;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASP_NET_Inlämningsuppgift_Facit
 {
@@ -74,6 +75,22 @@ namespace ASP_NET_Inlämningsuppgift_Facit
                 options.ExpireTimeSpan = TimeSpan.FromDays(2);
             });
 
+            services.AddScoped<IAuthorizationHandler, MyReqHandler>();
+
+            services.AddAuthorization(o => 
+            {
+                o.AddPolicy("OrganizerEditOnlyOwnEvent", b => 
+                {
+                    b.RequireRole("Organizer");
+                    b.Requirements.Add(new MyReq());
+                });
+
+                o.AddPolicy("OrganizerOtherPolicy", b =>
+                {
+                    b.Requirements.Add(new MyReq());
+                    b.RequireClaim("körkort");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

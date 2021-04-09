@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ASP_NET_Inlämningsuppgift_Facit.Data;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Pages
 {
+    [Authorize(Policy = "OrganizerEditOnlyOwnEvent")]
     public class JoinEventModel : PageModel
     {
         private readonly EventDbContext _context;
