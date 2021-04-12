@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using ASP_NET_Inlämningsuppgift_Facit.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using ASP_NET_Inlämningsuppgift_Facit.Requirements;
 
 namespace ASP_NET_Inlämningsuppgift_Facit
 {
@@ -36,9 +37,10 @@ namespace ASP_NET_Inlämningsuppgift_Facit
                 // Jag sätter en [AllowAnonymous] direkt i Index sidan för att demonstrera
                 // o.Conventions.AllowAnonymousToPage("/Index");
 
-                // Man måste skapa "RequireAdministratorRole" policyn för att detta ska fungera
-                // https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-5.0#policy-based-role-checks
-                // o.Conventions.AuthorizeFolder("/Admin", "RequireAdministratorRole");
+                o.Conventions.AuthorizeFolder("/Admin", "RequireAdministratorRole");
+                o.Conventions.AuthorizeFolder("/Admin/SuperAdmin", "SuperAdmin");
+
+                o.Conventions.AuthorizeFolder("/Organizer", "RequireOrganizerRole");
             });
 
             services.AddDbContext<EventDbContext>(options =>
@@ -75,20 +77,31 @@ namespace ASP_NET_Inlämningsuppgift_Facit
                 options.ExpireTimeSpan = TimeSpan.FromDays(2);
             });
 
-            services.AddScoped<IAuthorizationHandler, MyReqHandler>();
+            services.AddScoped<IAuthorizationHandler, EventOwnershipRequirementHandler>();
 
-            services.AddAuthorization(o => 
+            services.AddAuthorization(o =>
             {
-                o.AddPolicy("OrganizerEditOnlyOwnEvent", b => 
+                o.AddPolicy("RequireOrganizerRole", b =>
                 {
                     b.RequireRole("Organizer");
-                    b.Requirements.Add(new MyReq());
                 });
-
-                o.AddPolicy("OrganizerOtherPolicy", b =>
+                o.AddPolicy("RequireAdministratorRole", b =>
                 {
-                    b.Requirements.Add(new MyReq());
-                    b.RequireClaim("körkort");
+                    b.RequireRole("Admin");
+                });
+                o.AddPolicy("SuperAdmin", b => 
+                {
+                    b.RequireAuthenticatedUser();
+                    b.RequireRole("Admin");
+                    b.RequireClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
+                        "admin@hotmail.com",
+                        "admin1@hotmail.com",
+                        "admin2@hotmail.com");
+                });
+                o.AddPolicy("OrganizerOwnsEvent", b => 
+                {
+                    b.RequireRole("Organizer");
+                    b.Requirements.Add(new EventOwnershipRequirement());
                 });
             });
         }

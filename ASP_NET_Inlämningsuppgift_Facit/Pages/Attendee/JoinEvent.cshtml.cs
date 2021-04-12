@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Pages
 {
-    [Authorize(Policy = "OrganizerEditOnlyOwnEvent")]
     public class JoinEventModel : PageModel
     {
         private readonly EventDbContext _context;

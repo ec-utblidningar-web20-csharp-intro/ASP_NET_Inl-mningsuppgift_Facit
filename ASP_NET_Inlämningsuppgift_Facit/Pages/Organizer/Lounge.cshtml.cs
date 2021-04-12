@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ASP_NET_Inlämningsuppgift_Facit.Pages.Organizer
 {
-    [Authorize(Roles = "Organizer")]
     public class LoungeModel : PageModel
     {
         private readonly UserManager<MyUser> _userManager;

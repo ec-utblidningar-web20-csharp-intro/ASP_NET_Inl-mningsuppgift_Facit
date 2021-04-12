@@ -26,7 +26,11 @@
                         Det måste inte vara en knapp innuti en form-tag här
                         Det går lika bra med att ha en enkel anchor-tag istället
                     -->
-                    <a asp-page="/JoinEvent" asp-route-id="@item.Id" type="button" class="btn btn-outline-primary">Join</a>
+                    <a asp-page="/Attendee/JoinEvent" asp-route-id="@item.Id" type="button" class="btn btn-outline-primary">Join</a>
+                    @if (User.IsInRole("Organizer"))
+                    {
+                        <a asp-page="/Organizer/EditEvent" asp-route-id="@item.Id" type="button" class="btn btn-outline-primary btn-warning">Edit</a>
+                    }
                 </div>
             </div>
 
