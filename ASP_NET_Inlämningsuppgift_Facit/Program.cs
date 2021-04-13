@@ -26,7 +26,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit
                 var context = services.GetRequiredService<EventDbContext>();
                 var userManager = services.GetRequiredService<UserManager<MyUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                //context.ResetAndSeedAsync(userManager, roleManager).Wait();
+                context.ResetAndSeedAsync(userManager, roleManager).Wait();
             }
 
             host.Run();

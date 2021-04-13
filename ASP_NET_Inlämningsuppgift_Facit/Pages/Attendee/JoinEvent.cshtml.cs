@@ -43,6 +43,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
             }
             return Page();
         }
+        // Vad är id:t på eventet vi ska gå med i?
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)
@@ -50,6 +51,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
                 return NotFound();
             }
 
+            // Vilket event ska vi gå med i?
             Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
@@ -57,7 +59,9 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
                 return NotFound();
             }
 
+            // Vad är user id på den som ska gå med?
             var userId = _userManager.GetUserId(User);
+            // Vem är det som ska gå med?
             var user = await _context.Users
                 .Where(u => u.Id == userId)
                 .Include(u => u.AttendingEvents)
@@ -65,6 +69,9 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
 
             if (!user.AttendingEvents.Contains(Event))
             {
+                // Om vi har en användare och ett event så är det
+                // enkelt att lägga till eventet till användarens
+                // lista på planerade events.
                 user.AttendingEvents.Add(Event);
                 await _context.SaveChangesAsync();
             }

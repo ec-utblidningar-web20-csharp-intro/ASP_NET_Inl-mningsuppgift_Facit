@@ -9,10 +9,10 @@
 
 @foreach (var user in Model.Users)
 {
-    Model.CheckBox = await userManager.IsInRoleAsync(user, "Organizer");
+    bool isOrg = await userManager.IsInRoleAsync(user, "Organizer");
 
     <form method="post" asp-route-id="@user.Id">
-        @Html.CheckBoxFor(m => m.CheckBox, new { onchange= "this.form.submit()" })
+        @Html.CheckBoxFor(m => m.CheckBox, new { onchange= "this.form.submit()", @checked=isOrg })
     </form>
 
     <p>@user.UserName - @user.Email</p>
