@@ -38,9 +38,9 @@ namespace ASP_NET_Inlämningsuppgift_Facit
                 // o.Conventions.AllowAnonymousToPage("/Index");
 
                 o.Conventions.AuthorizeFolder("/Admin", "RequireAdministratorRole");
-                o.Conventions.AuthorizeFolder("/Admin/SuperAdmin", "SuperAdmin");
-
                 o.Conventions.AuthorizeFolder("/Organizer", "RequireOrganizerRole");
+                
+                o.Conventions.AuthorizeFolder("/Admin/SuperAdmin", "SuperAdmin");
             });
 
             services.AddDbContext<EventDbContext>(options =>
@@ -81,26 +81,28 @@ namespace ASP_NET_Inlämningsuppgift_Facit
 
             services.AddAuthorization(o =>
             {
-                o.AddPolicy("RequireOrganizerRole", b =>
-                {
-                    b.RequireRole("Organizer");
-                });
                 o.AddPolicy("RequireAdministratorRole", b =>
                 {
                     b.RequireRole("Admin");
                 });
+                o.AddPolicy("RequireOrganizerRole", b =>
+                {
+                    b.RequireRole("Organizer");
+                });
+
                 o.AddPolicy("SuperAdmin", b => 
                 {
                     b.RequireAuthenticatedUser();
                     b.RequireRole("Admin");
                     b.RequireClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress",
-                        "admin@hotmail.com",
-                        "admin1@hotmail.com",
-                        "admin2@hotmail.com");
+                        "superadmin@hotmail.com",
+                        "superadmin1@hotmail.com",
+                        "superadmin2@hotmail.com");
                 });
+
                 o.AddPolicy("OrganizerOwnsEvent", b => 
                 {
-                    b.RequireRole("Organizer");
+                    //b.RequireRole("Organizer");
                     b.Requirements.Add(new EventOwnershipRequirement());
                 });
             });

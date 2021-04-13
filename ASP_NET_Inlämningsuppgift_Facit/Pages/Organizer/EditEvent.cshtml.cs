@@ -36,7 +36,7 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Pages
                 return NotFound();
             }
 
-            Event = await _context.Events.FirstOrDefaultAsync(m => m.Id == id);
+            Event = await _context.Events.Include(e => e.Organizer).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Event == null)
             {

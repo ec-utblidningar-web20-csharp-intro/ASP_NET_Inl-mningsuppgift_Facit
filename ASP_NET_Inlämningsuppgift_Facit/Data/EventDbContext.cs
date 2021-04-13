@@ -36,14 +36,22 @@ namespace ASP_NET_Inlämningsuppgift_Facit.Data
             await Check(roleManager.CreateAsync(new IdentityRole("Attendee")));
             await Check(roleManager.CreateAsync(new IdentityRole("Admin")));
             await Check(roleManager.CreateAsync(new IdentityRole("Organizer")));
+
             MyUser admin = new MyUser()
             {
                 UserName = "admin",
                 Email = "admin@hotmail.com",
             };
             await userManager.CreateAsync(admin, "Passw0rd!");
-
             await Check(userManager.AddToRoleAsync(admin, "Admin"));
+
+            MyUser superadmin = new MyUser()
+            {
+                UserName = "superadmin",
+                Email = "superadmin@hotmail.com",
+            };
+            await userManager.CreateAsync(superadmin, "Passw0rd!");
+            await Check(userManager.AddToRoleAsync(superadmin, "Admin"));
 
             MyUser user = new MyUser()
             {
